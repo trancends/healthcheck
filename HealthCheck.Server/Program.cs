@@ -1,20 +1,23 @@
+using HealthCheck.Server;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+builder.Services.AddHealthChecks().AddCheck<ICMPHealthCheck>("ICMP");
 builder.Services.AddControllers();
 
 // Configure CORS
 builder.Services.AddCors(options =>
 {
-  options.AddPolicy(
-    "AllowAngularApp",
-    builder =>
-      builder
-        .WithOrigins("http://localhost:4200", "http://localhost:9876")
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-  );
+    options.AddPolicy(
+        "AllowAngularApp",
+        builder =>
+            builder
+                .WithOrigins("http://localhost:4200", "http://localhost:9876")
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+    );
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -26,8 +29,8 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
-  app.UseSwaggerUI();
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -35,6 +38,8 @@ app.UseHttpsRedirection();
 app.UseCors("AllowAngularApp");
 
 app.UseAuthorization();
+
+app.UseHealthChecks(new PathString("/api/health"));
 
 app.MapControllers();
 
