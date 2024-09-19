@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment.development';
   standalone: true,
   imports: [],
   templateUrl: './fetch-data.component.html',
-  styleUrl: './fetch-data.component.css',
+  styleUrl: './fetch-data.component.scss',
 })
 export class FetchDataComponent {
   public title = 'WeatherForecast';
