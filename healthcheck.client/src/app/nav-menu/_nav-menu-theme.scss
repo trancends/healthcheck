@@ -1,0 +1,18 @@
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+  .nav-menu.mat-mdc-button {
+    color: mat.get-theme-color($theme, primary);
+  }
+  // mat-mdcbutton {
+  //   color: mat.get-theme-color($theme, primary);
+  //   background: mat.get-theme-color($theme, primary-container);
+  // }
+  mat-toolbar {
+    background: mat.get-theme-color($theme, primary-container);
+  }
+
+  mat-icon {
+    color: mat.get-theme-color($theme, primary);
+  }
+}

@@ -1,4 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@use "@angular/material" as mat;
+@use "./app/nav-menu/nav-menu-theme";
+
+$theme: mat.define-theme(
+  (
+    color: (
+      theme-type: light,
+      primary: mat.$magenta-palette,
+      tertiary: mat.$violet-palette,
+    ),
+  )
+);
+
+@include mat.core();
+@include mat.color-variants-backwards-compatibility($theme);
+
+@mixin theme($theme) {
+  app-root {
+    color: mat.get-theme-color($theme, tertiary);
+  }
+
+  @include nav-menu-theme.theme($theme);
+}
+
+:root {
+  @include mat.all-component-themes($theme);
+  @include theme($theme);
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
